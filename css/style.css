@@ -1,7 +1,7 @@
-.span6{
+.span4,.span8{
 	margin-top:90px;
 }
-.span6 p{
+.span4 p,.span8 p{
 	font-size: 18px;
 	font-weight: 200;
 	line-height: 27px;
@@ -11,10 +11,10 @@
 }
 
 .custom-input{
-	width:300px;
+	width:320px;
 }
 #controls{
-	margin-left:110px;
+	margin-left:0px;
 }
 
 .form-horizontal{
@@ -23,3 +23,4 @@
 .well legend{
 	font-family: 'play' , sans-sarif;
 }
+
