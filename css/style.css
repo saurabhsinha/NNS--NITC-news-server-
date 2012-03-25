@@ -11,15 +11,13 @@
 }
 
 .custom-input{
-	width:320px;
+	width:260px;
 }
 #controls{
-	margin-left:0px;
+	margin-left:20px;
 }
 
-.form-horizontal{
-	margin-left:13px;
-}
+
 .well legend{
 	font-family: 'play' , sans-sarif;
 }
