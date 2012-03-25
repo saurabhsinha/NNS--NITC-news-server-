@@ -1,0 +1,25 @@
+.span6{
+	margin-top:90px;
+}
+.span6 p{
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 27px;
+	color: inherit;
+	font-family: 'play' , sans-sarif;
+	
+}
+
+.custom-input{
+	width:300px;
+}
+#controls{
+	margin-left:110px;
+}
+
+.form-horizontal{
+	margin-left:13px;
+}
+.well legend{
+	font-family: 'play' , sans-sarif;
+}
