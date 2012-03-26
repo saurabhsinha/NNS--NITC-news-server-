@@ -36,9 +36,8 @@
 								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu" style="width: 200px;padding-left: 10px;padding-top: 20px;">
-								<form action="" method="post">
+								<form action="" method="post" id="topbar-form">
 									<li><input type="text" style="width: 180px;" name="uname" placeholder="Username"></li>
-									<br>
 									<li><input type="password" style="width: 180px;" name="password" placeholder="Password"></li>
 									<li class="divider"></li>
 									<li>
@@ -67,8 +66,16 @@
 							<div class="controls" id="controls">
 								<input type="text" class="input-xlarge custom-input" id="input01" placeholder="Name">
 								<input type="text" class="input-xlarge custom-input" id="input02" placeholder="Email">
-								<input type="text" class="input-xlarge custom-input" id="input03" placeholder="Password">
+								<input type="password" class="input-xlarge custom-input" id="input03" placeholder="Password">
 								<input type="text" class="input-xlarge custom-input" id="input04" placeholder="Registration no.">
+								<div class="controls">
+									<select id="select01" class="span1">
+										<option selected="selected">Sex</option>
+										<option>Male</option>
+										<option>Female</option>
+									</select>
+								</div>
+								
 								<p class="help-block"></p>
 								<button type="submit" class="btn btn-primary">Register</button>
 							</div>
