@@ -6,6 +6,11 @@
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License 
 * @package content
 */
+/**
+* Includes files for database connectivity.
+*/
+
+include_once 'function.php';
 
 /**
 * Class user for managing users.
@@ -78,5 +83,121 @@ class user
 	public function getUserName(){
 		Return $this->uname;
 	}
+	/**
+	* Static function to return name of a user when User Id is passed.
+	* @param integer $uid User ID whose full name is required.
+	* @return string Full Name of the user with given User ID
+	*/
+	
+	public static function getFullNameS($uid)
+	{
+		$sql="Select name from nns_user where uid = '$uid'";
+		return pg_fetch_result(dbquery($sql),0,0);
+	}
+	public function getRoll(){
+		Return $this->uroll;
+	}
+	
+	public function getEmail()
+	{
+		return $this->uemail;
+	}
+	
+	public function getUserPicture()
+	{
+		global $global_user_folder;
+		return $global_user_folder."/".sha1($this->uid).".png";
+	}
+	
+	function updateUser($fname,$roll,$email,$sex){
+		$sql="update nns_user set name = '$fname', registration = '$roll', email = '$email',sex='$sex' where uid = '$this->uid'";
+		if(dbquery($sql)){
+			return 1;
+		}
+		return 0;
+		}
+		
+		static function updatePass($uid,$oldpass,$newpass){
+		$uid=pg_escape_string($uid);
+		$sql="Select uid from nns_user where password = '".sha1($oldpass)."' and uid = '".$uid."'";
+		$row=resource2array(dbquery($sql));
+		if($row[0]){
+			$newpass=pg_escape_string($newpass);
+			$sql="update users set psssword = '".sha1($newpass)."' where uid = '$this->uid' returning uid";
+			$row=resource2array(dbquery($sql));
+			if($row[0]){
+				return 1;
+			}
+		}
+		return 0;
+		}
+		
+		static function updateInfo($uid, $fname, $roll, $email,$sex){
+		$uid=pg_escape_string($uid);
+		$fname=pg_escape_string($fname);
+		$roll=strtolower(pg_escape_string($roll));
+		$email=pg_escape_string($email);
+		$sql="update nns_user set name='$fname', registration='$roll', email='$email',sex='$sex' where uid='$uid' returning uid";
+		$row=resource2array(dbquery($sql));
+		return $row[0];
+		}
+		/**
+	* Static function to return the PATH of the user pic URL when user id is known.
+	* @param integer $uid User ID
+	* @return string relative PATH of the user DP.
+	*/
+	public static function getUserPictureS($uid)
+	{
+		global $global_user_folder;
+		return $global_user_folder."/".sha1($uid).".png";
+	}
+	
+	/**
+	* Static function to check if a username already exists.
+	* @param string $uname Given Username
+	* @return integer returns (exists:1 | does not exist:0)
+	*/
+	public static function checkUsernameExists($uname)
+	{
+		$sql="Select uid from nns_user where name='$uname'";
+		$row=pg_fetch_row(dbquery($sql));
+		if($row)
+			return 1;
+		else
+			return 0;
+	}
+	
+	/**
+	* Static function check if an email already exists. 
+	* @param string $email Given Email ID
+	* @return integer (1: exists | 0: does not exists)
+	*/
+	public static function checkEmailExists($email)
+	{
+		$sql="Select uid from nns_user where email='$email'";
+		$row=pg_fetch_row(dbquery($sql));
+		if($row)
+			return 1;
+		else
+			return 0;
+	}
+	
+	/**
+	* Checks if a roll no already exists in the database.
+	* @param string $roll Register number of the user.
+	* @return integer (1:exists | 0:does not exist)
+	*/
+	public static function checkRollExists($roll)
+	{
+		$roll=strtolower($roll);
+		$sql="Select uid from user where registration='$roll'";
+		$row=pg_fetch_row(dbquery($sql));
+		if($row)
+			return 1;
+		else
+			return 0;
+	}
+
+
 }
 ?>
