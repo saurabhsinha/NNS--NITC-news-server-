@@ -1,10 +1,11 @@
 <?php
 /**
-* User class for handling user related functions.
+* User class is a base class for various type of users.
+* All functions which deals with the abstract user are packaged in this class.any function handling abstract user must be written here.
 * @author Saurabh kumar <saurabh.nitc10@gmail.com>
 * @copyright Copyright (c) 2012, Saurabh kumar
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License 
-* @package content
+* @package user
 */
 /**
 * Includes files for database connectivity.
@@ -19,24 +20,7 @@ include_once 'function.php';
 
 class user
 {
-	private $uid, $uname, $usex, $uroll, $uemail, $utype, $uregtime;
-	
-	/**
-	* The constructor selects the appropriate function based on the number of
-	* arguments and calls the appropriate protected function.
-	*/
-	
-	public function __construct()
-	{
-		$a = func_get_args();
-		$i = func_num_args(); 
-		if($i==1)
-			call_user_func_array(array($this,'view'),$a);
-		if($i==6)
-			call_user_func_array(array($this,'create'),$a);
-	}
-
-	public function __destruct() { }
+	protected $uid, $uname, $usex, $uroll, $uemail, $utype, $uregtime;
 	
 	/**
 	* Initializes the class properties for a given user id.
@@ -71,7 +55,8 @@ class user
 		$this->usex=pg_escape_string($usex);
 		$this->uroll=pg_escape_string($uroll);
 		$this->uemail=pg_escape_string($uemail);
-		$this->utype=pg_escape_string($utype);
+		//$this->utype=pg_escape_string($utype);
+		$this->utype= 'n';
 		$sql="Insert into nns_user (name, email, password, sex, registration, type) values ('".$this->uname."','".$this->uemail."','".$this->upass."','".$this->usex."','".$this->uroll."','".$this->utype."') returning uid";
 		$user=pg_fetch_assoc(dbquery($sql));
 		$this->uid=$user['uid'];
@@ -80,9 +65,35 @@ class user
 	public function getUserId(){
 		Return $this->uid;
 	}
+	
 	public function getUserName(){
 		Return $this->uname;
 	}
+	
+	public function getRoll(){
+		Return $this->uroll;
+	}
+	
+	public function getEmail()
+	{
+		return $this->uemail;
+	}
+	
+	public function getSex()
+	{
+		return $this->usex;
+	}
+	
+	public function getUsertype()
+	{
+		return $this->utype;
+	}
+	
+	public function getRegistrationTime()
+	{
+		return $this->uregtime;
+	}
+	
 	/**
 	* Static function to return name of a user when User Id is passed.
 	* @param integer $uid User ID whose full name is required.
@@ -94,14 +105,7 @@ class user
 		$sql="Select name from nns_user where uid = '$uid'";
 		return pg_fetch_result(dbquery($sql),0,0);
 	}
-	public function getRoll(){
-		Return $this->uroll;
-	}
 	
-	public function getEmail()
-	{
-		return $this->uemail;
-	}
 	
 	public function getUserPicture()
 	{

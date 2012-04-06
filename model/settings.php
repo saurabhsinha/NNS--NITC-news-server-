@@ -10,9 +10,9 @@
 /**
 * Main Database (Postgresql)
 */
-	$global_db_username		=	"";
-	$global_db_password		=	"";
-	$global_db_host			=	"";
-	$global_db_name			=	"";
-	$global_db_port			=	"";
+	$global_db_username		=	"saurabh";
+	$global_db_password		=	".";
+	$global_db_host			=	"localhost";
+	$global_db_name			=	"nns";
+	$global_db_port			=	"5432";
 ?>
