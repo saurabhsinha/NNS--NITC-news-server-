@@ -225,19 +225,19 @@ class user
 		if($utype=="n"){
 			return 1;
 		}
-		return 0;
+		return 0;  
 	}
 	
-	public function delete($uid){
-		$sql="delete from nns_user where uid = '$uid'";
-		if(dbquery($sql)){
+	public static function isChannelAdmin($uid){
+		$sql="select type from nns_user where uid = '$uid'";
+		$user=pg_fetch_assoc(dbquery($sql));
+		$utype=preg_replace('/\s+/', '', $user['type']);
+		if($utype=="c"){
 			return 1;
 		}
-		return 0;
+		return 0;  
 	}
-	
-	
 }
-#$temp = new user(4);
+#$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
 #$temp->isAdmin(4);
 ?>
