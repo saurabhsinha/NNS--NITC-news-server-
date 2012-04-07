@@ -1,7 +1,6 @@
 <?php
 /**
 * User class is a base class for various type of users.
-* All functions which deals with the abstract user are packaged in this class.any function handling abstract user must be written here.
 * @author Saurabh kumar <saurabh.nitc10@gmail.com>
 * @copyright Copyright (c) 2012, Saurabh kumar
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License 
@@ -18,14 +17,31 @@ include_once 'function.php';
 * @package user
 */
 
-abstract class user
+class user
 {
 	protected $uid, $uname, $usex, $uroll, $uemail, $utype, $uregtime;
+	
+	/**
+	* The constructor selects the appropriate function based on the number of
+	* arguments and calls the appropriate protected function.
+	*/
+	public function __construct()
+	{
+		$a = func_get_args();
+		$i = func_num_args(); 
+		if($i==1)
+			call_user_func_array(array($this,'view'),$a);
+		if($i==6)
+			call_user_func_array(array($this,'create'),$a);
+	}
+
+	public function __destruct() { }
 	
 	/**
 	* Initializes the class properties for a given user id.
 	* @param integer $uid User ID of a user
 	*/
+	
 	protected function view($uid)
 	{
 		$sql="Select name, email, sex, registration, type from nns_user where uid = '$uid'";
@@ -200,6 +216,14 @@ abstract class user
 			return 1;
 		else
 			return 0;
+	}
+	
+	public function delete($uid){
+		$sql="delete from nns_user where uid = '$uid'";
+		if(dbquery($sql)){
+			return 1;
+		}
+		return 0;
 	}
 
 
