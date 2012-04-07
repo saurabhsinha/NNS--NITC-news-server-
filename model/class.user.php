@@ -18,7 +18,7 @@ include_once 'function.php';
 * @package user
 */
 
-class user
+abstract class user
 {
 	protected $uid, $uname, $usex, $uroll, $uemail, $utype, $uregtime;
 	

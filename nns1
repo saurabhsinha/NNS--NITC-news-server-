@@ -1,0 +1,355 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: channelid; Type: SEQUENCE; Schema: public; Owner: saurabh
+--
+
+CREATE SEQUENCE channelid
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.channelid OWNER TO saurabh;
+
+--
+-- Name: channelid; Type: SEQUENCE SET; Schema: public; Owner: saurabh
+--
+
+SELECT pg_catalog.setval('channelid', 1, false);
+
+
+--
+-- Name: commentid; Type: SEQUENCE; Schema: public; Owner: saurabh
+--
+
+CREATE SEQUENCE commentid
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.commentid OWNER TO saurabh;
+
+--
+-- Name: commentid; Type: SEQUENCE SET; Schema: public; Owner: saurabh
+--
+
+SELECT pg_catalog.setval('commentid', 1, false);
+
+
+--
+-- Name: newsid; Type: SEQUENCE; Schema: public; Owner: saurabh
+--
+
+CREATE SEQUENCE newsid
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.newsid OWNER TO saurabh;
+
+--
+-- Name: newsid; Type: SEQUENCE SET; Schema: public; Owner: saurabh
+--
+
+SELECT pg_catalog.setval('newsid', 1, false);
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: nns_channel; Type: TABLE; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+CREATE TABLE nns_channel (
+    uid integer,
+    channelid integer DEFAULT nextval('channelid'::regclass) NOT NULL,
+    channelname character varying(40),
+    channeldescription character varying(100),
+    genre character varying(40)
+);
+
+
+ALTER TABLE public.nns_channel OWNER TO saurabh;
+
+--
+-- Name: nns_comment; Type: TABLE; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+CREATE TABLE nns_comment (
+    commentid integer DEFAULT nextval('commentid'::regclass) NOT NULL,
+    newsid integer,
+    uid integer,
+    channelid integer,
+    description character varying(300) NOT NULL,
+    "timestamp" timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.nns_comment OWNER TO saurabh;
+
+--
+-- Name: nns_news; Type: TABLE; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+CREATE TABLE nns_news (
+    newsid integer DEFAULT nextval('newsid'::regclass) NOT NULL,
+    channelid integer,
+    uid integer,
+    description character varying(100),
+    "timestamp" timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.nns_news OWNER TO saurabh;
+
+--
+-- Name: nns_subscribe; Type: TABLE; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+CREATE TABLE nns_subscribe (
+    uid integer,
+    channelid integer,
+    "timestamp" timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.nns_subscribe OWNER TO saurabh;
+
+--
+-- Name: nns_user; Type: TABLE; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+CREATE TABLE nns_user (
+    uid integer NOT NULL,
+    name character varying(40),
+    email character varying(40),
+    password character varying(64),
+    sex character(6),
+    registration character varying(10),
+    type character(2),
+    regtime timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.nns_user OWNER TO saurabh;
+
+--
+-- Name: nns_user_uid_seq; Type: SEQUENCE; Schema: public; Owner: saurabh
+--
+
+CREATE SEQUENCE nns_user_uid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.nns_user_uid_seq OWNER TO saurabh;
+
+--
+-- Name: nns_user_uid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: saurabh
+--
+
+ALTER SEQUENCE nns_user_uid_seq OWNED BY nns_user.uid;
+
+
+--
+-- Name: nns_user_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: saurabh
+--
+
+SELECT pg_catalog.setval('nns_user_uid_seq', 2, true);
+
+
+--
+-- Name: uid; Type: DEFAULT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_user ALTER COLUMN uid SET DEFAULT nextval('nns_user_uid_seq'::regclass);
+
+
+--
+-- Data for Name: nns_channel; Type: TABLE DATA; Schema: public; Owner: saurabh
+--
+
+COPY nns_channel (uid, channelid, channelname, channeldescription, genre) FROM stdin;
+\.
+
+
+--
+-- Data for Name: nns_comment; Type: TABLE DATA; Schema: public; Owner: saurabh
+--
+
+COPY nns_comment (commentid, newsid, uid, channelid, description, "timestamp") FROM stdin;
+\.
+
+
+--
+-- Data for Name: nns_news; Type: TABLE DATA; Schema: public; Owner: saurabh
+--
+
+COPY nns_news (newsid, channelid, uid, description, "timestamp") FROM stdin;
+\.
+
+
+--
+-- Data for Name: nns_subscribe; Type: TABLE DATA; Schema: public; Owner: saurabh
+--
+
+COPY nns_subscribe (uid, channelid, "timestamp") FROM stdin;
+\.
+
+
+--
+-- Data for Name: nns_user; Type: TABLE DATA; Schema: public; Owner: saurabh
+--
+
+COPY nns_user (uid, name, email, password, sex, registration, type, regtime) FROM stdin;
+\.
+
+
+--
+-- Name: nns_channel_pkey; Type: CONSTRAINT; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+ALTER TABLE ONLY nns_channel
+    ADD CONSTRAINT nns_channel_pkey PRIMARY KEY (channelid);
+
+
+--
+-- Name: nns_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+ALTER TABLE ONLY nns_comment
+    ADD CONSTRAINT nns_comment_pkey PRIMARY KEY (commentid);
+
+
+--
+-- Name: nns_news_pkey; Type: CONSTRAINT; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+ALTER TABLE ONLY nns_news
+    ADD CONSTRAINT nns_news_pkey PRIMARY KEY (newsid);
+
+
+--
+-- Name: nns_user_pkey; Type: CONSTRAINT; Schema: public; Owner: saurabh; Tablespace: 
+--
+
+ALTER TABLE ONLY nns_user
+    ADD CONSTRAINT nns_user_pkey PRIMARY KEY (uid);
+
+
+--
+-- Name: nns_channel_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_channel
+    ADD CONSTRAINT nns_channel_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
+
+
+--
+-- Name: nns_comment_channelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_comment
+    ADD CONSTRAINT nns_comment_channelid_fkey FOREIGN KEY (channelid) REFERENCES nns_channel(channelid);
+
+
+--
+-- Name: nns_comment_newsid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_comment
+    ADD CONSTRAINT nns_comment_newsid_fkey FOREIGN KEY (newsid) REFERENCES nns_news(newsid);
+
+
+--
+-- Name: nns_comment_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_comment
+    ADD CONSTRAINT nns_comment_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
+
+
+--
+-- Name: nns_news_channelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_news
+    ADD CONSTRAINT nns_news_channelid_fkey FOREIGN KEY (channelid) REFERENCES nns_channel(channelid);
+
+
+--
+-- Name: nns_news_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_news
+    ADD CONSTRAINT nns_news_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
+
+
+--
+-- Name: nns_subscribe_channelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_subscribe
+    ADD CONSTRAINT nns_subscribe_channelid_fkey FOREIGN KEY (channelid) REFERENCES nns_channel(channelid);
+
+
+--
+-- Name: nns_subscribe_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
+--
+
+ALTER TABLE ONLY nns_subscribe
+    ADD CONSTRAINT nns_subscribe_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -14,7 +14,7 @@ include_once 'class.user.php';
 /**
 *
 */
-class normaluser extends user
+class admin extends user
 {
 
 	/**
