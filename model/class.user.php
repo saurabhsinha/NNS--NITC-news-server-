@@ -1,6 +1,5 @@
 <?php
 /**
-* User class is a base class for various type of users.
 * @author Saurabh kumar <saurabh.nitc10@gmail.com>
 * @copyright Copyright (c) 2012, Saurabh kumar
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License 
