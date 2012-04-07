@@ -218,6 +218,16 @@ class user
 			return 0;
 	}
 	
+	public static function isAdmin($uid){
+		$sql="select type from nns_user where uid = '$uid'";
+		$user=pg_fetch_assoc(dbquery($sql));
+		$utype=preg_replace('/\s+/', '', $user['type']);
+		if($utype=="n"){
+			return 1;
+		}
+		return 0;
+	}
+	
 	public function delete($uid){
 		$sql="delete from nns_user where uid = '$uid'";
 		if(dbquery($sql)){
@@ -225,7 +235,9 @@ class user
 		}
 		return 0;
 	}
-
-
+	
+	
 }
+#$temp = new user(4);
+#$temp->isAdmin(4);
 ?>
