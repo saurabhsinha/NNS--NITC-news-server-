@@ -42,7 +42,7 @@ ALTER TABLE public.channelid OWNER TO saurabh;
 -- Name: channelid; Type: SEQUENCE SET; Schema: public; Owner: saurabh
 --
 
-SELECT pg_catalog.setval('channelid', 1, false);
+SELECT pg_catalog.setval('channelid', 1, true);
 
 
 --
@@ -193,7 +193,7 @@ ALTER SEQUENCE nns_user_uid_seq OWNED BY nns_user.uid;
 -- Name: nns_user_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: saurabh
 --
 
-SELECT pg_catalog.setval('nns_user_uid_seq', 2, true);
+SELECT pg_catalog.setval('nns_user_uid_seq', 3, true);
 
 
 --
@@ -208,6 +208,7 @@ ALTER TABLE ONLY nns_user ALTER COLUMN uid SET DEFAULT nextval('nns_user_uid_seq
 --
 
 COPY nns_channel (uid, channelid, channelname, channeldescription, genre) FROM stdin;
+3	1	lost & found	lost and found	lost & found
 \.
 
 
@@ -240,6 +241,7 @@ COPY nns_subscribe (uid, channelid, "timestamp") FROM stdin;
 --
 
 COPY nns_user (uid, name, email, password, sex, registration, type, regtime) FROM stdin;
+3	saurabh	saurabh.nitc10@gmail.com	indian	male  	m100057ca	a 	2012-04-07 14:53:29.779762
 \.
 
 
@@ -276,14 +278,6 @@ ALTER TABLE ONLY nns_user
 
 
 --
--- Name: nns_channel_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
---
-
-ALTER TABLE ONLY nns_channel
-    ADD CONSTRAINT nns_channel_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
-
-
---
 -- Name: nns_comment_channelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
 --
 
@@ -300,14 +294,6 @@ ALTER TABLE ONLY nns_comment
 
 
 --
--- Name: nns_comment_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
---
-
-ALTER TABLE ONLY nns_comment
-    ADD CONSTRAINT nns_comment_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
-
-
---
 -- Name: nns_news_channelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
 --
 
@@ -316,27 +302,11 @@ ALTER TABLE ONLY nns_news
 
 
 --
--- Name: nns_news_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
---
-
-ALTER TABLE ONLY nns_news
-    ADD CONSTRAINT nns_news_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
-
-
---
 -- Name: nns_subscribe_channelid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
 --
 
 ALTER TABLE ONLY nns_subscribe
     ADD CONSTRAINT nns_subscribe_channelid_fkey FOREIGN KEY (channelid) REFERENCES nns_channel(channelid);
-
-
---
--- Name: nns_subscribe_uid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: saurabh
---
-
-ALTER TABLE ONLY nns_subscribe
-    ADD CONSTRAINT nns_subscribe_uid_fkey FOREIGN KEY (uid) REFERENCES nns_user(uid);
 
 
 --
