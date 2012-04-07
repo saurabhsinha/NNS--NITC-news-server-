@@ -1,10 +1,10 @@
 <?php
 /**
-* User class is a base class for various type of users.
+* Admin class is a  class for various type of admin funtions.
 * @author Saurabh kumar <saurabh.nitc10@gmail.com>
 * @copyright Copyright (c) 2012, Saurabh kumar
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License 
-* @package user
+* @package admin
 */
 /**
 * Includes files for database connectivity.
@@ -22,7 +22,13 @@ class admin{
 		}
 		return 0;
 	}
-	
+	/**
+	* Function to create a new channel. The generated channel ID is stored in the property channelid.
+	* @param string $uid Userid of the user
+	* @param string $channeldescription is the detail of the channel.
+	* @param string $channel name is the name of the channel.
+	* @param string $genre is the genre of the channel
+	*/
 	public function createChannel($uid,$channelname,$channeldescription,$genre){
 		$this->uid=$uid;
 		$this->channelname=pg_escape_string($channelname);
@@ -45,6 +51,10 @@ class admin{
 	public function getChannelGenre(){
 		Return $this->genre;
 	}
+	
+	/**
+	* function writen for deleting any channel by the admin if the cahnnelid is passed as parameter
+	*/
 	public function deleteChannel($channelid){
 		$sql="delete from nns_channel where channelid = '$channelid'";
 		if(dbquery($sql)){
