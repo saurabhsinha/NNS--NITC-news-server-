@@ -250,6 +250,20 @@ class user
 	}
 	
 	/**
+	* function for checking wheather a user is subscribed for a channel or not
+	* @param string $uid and $channelid is the user id of the current user and channelid of the searched channel.
+	* @return integer (1: if subscribed | 0: not subscribed)
+	*/
+	public static function isSubscribed($uid,$channelid){
+		$sql="select timestamp from nns_subscribe where uid='$uid' and channelid='$channelid'";
+		$timestamp=resource2array(dbquery($sql));
+			if($timestamp[0]){
+				return 1;
+			}
+			return 0;
+	}
+	
+	/**
 	* function to subscribe to a specific channel.
 	*/
 	
@@ -276,5 +290,7 @@ class user
 }
 #$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
 #$temp->isAdmin(4);
+#$temp = new user();
+#$temp->isSubscribed(4,1);
 
 ?>
