@@ -62,6 +62,8 @@ class admin{
 		}
 		return 0;
 	}
+	
+	
 }
 #$test=new admin();
 #$test->createChannel(4,'test','wtf','test');

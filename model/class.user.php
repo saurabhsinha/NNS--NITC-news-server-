@@ -236,7 +236,27 @@ class user
 		}
 		return 0;  
 	}
+	
+	public static function subscribe($uid,$channelid){
+		$sql="insert into nns_subscribe (uid,channelid) values('$uid','$channelid')";
+		if(dbquery($sql)){
+			echo "1";
+		}
+		return 0;
+	}
+	
+	public static function unsubscribe($uid,$channelid){
+		$sql = "delete from nns_subscribe where channelid = '$channelid' and uid='$uid'";
+		if(dbquery($sql)){
+			echo "1";
+		}
+		return 0;
+	}
+	
+	
 }
 #$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
 #$temp->isAdmin(4);
+#$temp = new user();
+#$temp->unsubscribe(4,1);
 ?>
