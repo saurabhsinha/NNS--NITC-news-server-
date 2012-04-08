@@ -217,6 +217,12 @@ class user
 			return 0;
 	}
 	
+	/**
+	* Checks if a the user is admin or not
+	* @param string $uid is the user id of the current user.
+	* @return integer (1:if admin | 0:does not)
+	*/
+	
 	public static function isAdmin($uid){
 		$sql="select type from nns_user where uid = '$uid'";
 		$user=pg_fetch_assoc(dbquery($sql));
@@ -226,6 +232,12 @@ class user
 		}
 		return 0;  
 	}
+	
+	/**
+	* Checks if a the user is channeladmin or not
+	* @param string $uid is the user id of the current user.
+	* @return integer (1:if channeladmin | 0:does not)
+	*/
 	
 	public static function isChannelAdmin($uid){
 		$sql="select type from nns_user where uid = '$uid'";
@@ -237,6 +249,10 @@ class user
 		return 0;  
 	}
 	
+	/**
+	* function to subscribe to a specific channel.
+	*/
+	
 	public static function subscribe($uid,$channelid){
 		$sql="insert into nns_subscribe (uid,channelid) values('$uid','$channelid')";
 		if(dbquery($sql)){
@@ -244,6 +260,10 @@ class user
 		}
 		return 0;
 	}
+	
+	/**
+	* function to unsubscribe to a specific channel.
+	*/
 	
 	public static function unsubscribe($uid,$channelid){
 		$sql = "delete from nns_subscribe where channelid = '$channelid' and uid='$uid'";
@@ -253,10 +273,8 @@ class user
 		return 0;
 	}
 	
-	
 }
 #$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
 #$temp->isAdmin(4);
-#$temp = new user();
-#$temp->unsubscribe(4,1);
+
 ?>
