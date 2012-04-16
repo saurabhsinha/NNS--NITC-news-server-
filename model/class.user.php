@@ -287,6 +287,15 @@ class user
 		return 0;
 	}
 	
+	/**
+	* function written for creating the news.
+	*.it will take 3 arguments $uid for user id,$channelid for channelid,$description for description of news
+	* value of $status == 'ap' if channel admin approved the news otherwise $status == 'np'
+	*/
+	public function createNews($uid,$channelid,$description){
+		
+	}
+	
 }
 #$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
 #$temp->isAdmin(4);

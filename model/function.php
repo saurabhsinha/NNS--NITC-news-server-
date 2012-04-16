@@ -1,10 +1,10 @@
 <?php
 /**
-* User class for handling user related functions.
+* function class for handling database related functions.
 * @author Saurabh kumar <saurabh.nitc10@gmail.com>
 * @copyright Copyright (c) 2012, Saurabh kumar
 * @license http://www.gnu.org/licenses/gpl.html GNU General Public License 
-* @package content
+* @package functions
 */
 
 /**
