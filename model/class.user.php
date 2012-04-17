@@ -291,13 +291,20 @@ class user
 	* function written for creating the news.
 	*.it will take 3 arguments $uid for user id,$channelid for channelid,$description for description of news
 	* value of $status == 'ap' if channel admin approved the news otherwise $status == 'np'
+	* it will return $row and array in the page where the function is called and can access it by $arr[0]...
 	*/
 	public function createNews($uid,$channelid,$description){
-		
+		$sql="insert into nns_news (channelid,uid,description,status) values ('$channelid','$uid','$description','np') returning newsid,timestamp,uid";
+		$row=resource2array(dbquery($sql));
+		return $row;
 	}
 	
 }
 #$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
+#$temp = new user();
+#$temp1=array();
+#$temp1=$temp->createNews('3','2','blah');
+#echo $temp1[0];
 #$temp->isAdmin(4);
 #$temp = new user();
 #$temp->isSubscribed(4,1);
