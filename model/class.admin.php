@@ -68,7 +68,7 @@ class admin{
 		return 0;
 	}
 	/**
-	* furnction to create channel admin from existing normal username
+	* function to create channel admin from existing normal username
 	* It will return 1 if done else 
 	*/
 	public function createChannelAdmin($uid){
@@ -78,10 +78,23 @@ class admin{
 		}
 		return 0;
 	}
+	
+	/**
+	* this function will take the newsid as argument and approves the news as a valid news
+	* returns 1 if approved other wise 0
+	*/
+	public function newsApprove($newsid){
+		$sql="update nns_news set status='ap' where newsid='$newsid'";
+		if(dbquery($sql)){
+			return 1;
+		}
+		return 0;
+	}
+	
 
 }
 #$test=new admin();
-#$test->createChannelAdmin('3');
+#$test->newsApprove('3');
 #$test->createChannel(4,'test','wtf','test');
 #$test->deleteChannel(5);
 ?>

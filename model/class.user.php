@@ -223,7 +223,7 @@ class user
 	* @return integer (1:if admin | 0:does not)
 	*/
 	
-	public static function isAdmin($uid){
+	public function isAdmin($uid){
 		$sql="select type from nns_user where uid = '$uid'";
 		$user=pg_fetch_assoc(dbquery($sql));
 		$utype=preg_replace('/\s+/', '', $user['type']);
@@ -239,7 +239,7 @@ class user
 	* @return integer (1:if channeladmin | 0:does not)
 	*/
 	
-	public static function isChannelAdmin($uid){
+	public function isChannelAdmin($uid){
 		$sql="select type from nns_user where uid = '$uid'";
 		$user=pg_fetch_assoc(dbquery($sql));
 		$utype=preg_replace('/\s+/', '', $user['type']);
@@ -270,7 +270,7 @@ class user
 	public static function subscribe($uid,$channelid){
 		$sql="insert into nns_subscribe (uid,channelid) values('$uid','$channelid')";
 		if(dbquery($sql)){
-			echo "1";
+			return 1;
 		}
 		return 0;
 	}
@@ -299,14 +299,32 @@ class user
 		return $row;
 	}
 	
+	/**
+	* function written for deleting the news posted by the respective user
+	* this function can also be used by the admin or the channel admin to delete the news if its not appropriate
+	* it take two arguments the $uid and $newsid
+	* return 1 if deleted the news else 0
+	*/
+	
+	public function deleteNews($newsid,$uid){
+		if($this->isAdmin($uid) || $this->isChannelAdmin($uid)){
+			$sql = "delete from nns_news where newsid = '$newsid'";
+			if(dbquery($sql)){
+				return 1;
+			}
+			return 0;
+		}
+		else{
+			$sql = "delete from nns_news where newsid = '$newsid' and uid='$uid'";
+			if(dbquery($sql)){
+				return 1;
+			}
+			return 0;
+		}
+	}
 }
 #$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
-#$temp = new user();
-#$temp1=array();
-#$temp1=$temp->createNews('3','2','blah');
-#echo $temp1[0];
-#$temp->isAdmin(4);
-#$temp = new user();
-#$temp->isSubscribed(4,1);
+#$temp->deleteNews('10','3');
+
 
 ?>
