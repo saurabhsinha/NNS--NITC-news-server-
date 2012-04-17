@@ -14,9 +14,12 @@
 include_once 'function.php';
 
 class admin{
+	/**
+	* Function to delete any user from the database..
+	*/
 
 	private $channelid;
-	public function delete($uid){
+	public function deleteUser($uid){
 		$sql="delete from nns_user where uid = '$uid'";
 		if(dbquery($sql)){
 			return 1;
@@ -55,18 +58,30 @@ class admin{
 	
 	/**
 	* function writen for deleting any channel by the admin if the cahnnelid is passed as parameter
+	* return 1 if deleted and return 0 if not deleted
 	*/
 	public function deleteChannel($channelid){
 		$sql="delete from nns_channel where channelid = '$channelid'";
 		if(dbquery($sql)){
-			echo "done";
+			return 1;
 		}
 		return 0;
 	}
-	
-	
+	/**
+	* furnction to create channel admin from existing normal username
+	* It will return 1 if done else 
+	*/
+	public function createChannelAdmin($uid){
+		$sql="update nns_user set type = 'c' where uid='$uid'";
+		if(dbquery($sql)){
+			return 1;
+		}
+		return 0;
+	}
+
 }
 #$test=new admin();
+#$test->createChannelAdmin('3');
 #$test->createChannel(4,'test','wtf','test');
 #$test->deleteChannel(5);
 ?>
