@@ -47,7 +47,7 @@ class user
 		$user=pg_fetch_assoc(dbquery($sql));
 		$this->uid=$uid;
 		$this->uname=$user['name'];
-		$this->email=$user['email'];
+		$this->uemail=$user['email'];
 		$this->uroll=$user['registration'];
 		$this->usex=$user['sex'];
 		$this->utype=$user['type'];
@@ -323,8 +323,9 @@ class user
 		}
 	}
 }
-#$temp = new user('saurabh1','indian','m','a','m100','test@gmail.com');
-#$temp->deleteNews('10','3');
+$temp = new user('3');
+#echo $temp['email'];
+$temp->getEmail();
 
 
 ?>
