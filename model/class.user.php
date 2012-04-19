@@ -30,7 +30,7 @@ class user
 		$i = func_num_args(); 
 		if($i==1)
 			call_user_func_array(array($this,'view'),$a);
-		if($i==6)
+		if($i==5)
 			call_user_func_array(array($this,'create'),$a);
 	}
 
@@ -63,14 +63,13 @@ class user
 	& @param string $type is for the user type
 	*/
 	
-	protected function create($uname, $upass, $usex, $utype, $uroll, $uemail)
+	protected function create($uname, $upass, $usex,$uroll, $uemail)
 	{
 		$this->uname=pg_escape_string($uname);
 		$this->upass=sha1(pg_escape_string($upass));
 		$this->usex=pg_escape_string($usex);
 		$this->uroll=pg_escape_string($uroll);
 		$this->uemail=pg_escape_string($uemail);
-		//$this->utype=pg_escape_string($utype);
 		$this->utype= 'n';
 		$sql="Insert into nns_user (name, email, password, sex, registration, type) values ('".$this->uname."','".$this->uemail."','".$this->upass."','".$this->usex."','".$this->uroll."','".$this->utype."') returning uid";
 		$user=pg_fetch_assoc(dbquery($sql));

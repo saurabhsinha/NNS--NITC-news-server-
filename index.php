@@ -37,7 +37,7 @@
 							</a>
 							<ul class="dropdown-menu" style="width: 200px;padding-left: 10px;padding-top: 20px;">
 								<form action="" method="post" id="topbar-form">
-									<li><input type="text" style="width: 180px;" name="uname" placeholder="Username"></li>
+									<li><input type="text" style="width: 180px;" name="uname" placeholder="email"></li>
 									<li><input type="password" style="width: 180px;" name="password" placeholder="Password"></li>
 									<li class="divider"></li>
 									<li>
@@ -59,17 +59,18 @@
 				</div>
 				
 				<div class="span4">
-					<form class="well">
+					<form class="well" action='response/join.php' method='post'>
 					<fieldset>
 						<legend>New to NNS? Register</legend>
 						<div class="control-group">
 							<div class="controls" id="controls">
-								<input type="text" class="input-xlarge custom-input" id="input01" placeholder="Name">
-								<input type="text" class="input-xlarge custom-input" id="input02" placeholder="Email">
-								<input type="password" class="input-xlarge custom-input" id="input03" placeholder="Password">
-								<input type="text" class="input-xlarge custom-input" id="input04" placeholder="Registration no.">
+								<input type="text" class="input-xlarge custom-input" id="input01" placeholder="Name" name="username">
+								<input type="text" class="input-xlarge custom-input" id="input02" placeholder="Email" name="useremail">
+								<input type="password" class="input-xlarge custom-input" id="input03" placeholder="Password" name="pass1">
+								<input type="password" class="input-xlarge custom-input" id="input04" placeholder="Password again" name="pass2">
+								<input type="text" class="input-xlarge custom-input" id="input05" placeholder="Registration no." name="roll">
 								<div class="controls">
-									<select id="select01" class="span1">
+									<select id="select01" class="span1" name="sex">
 										<option selected="selected">Sex</option>
 										<option>Male</option>
 										<option>Female</option>
