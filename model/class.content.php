@@ -19,7 +19,7 @@ include_once 'function.php';
 */
 abstract class content{
 
-	protected $channelid,$uid,$newsid,$description,$timestamp,$status;
+	protected $channelid,$uid,$newsid,$description,$timestamp,$status,$channelname,$channeldescription,$genre;
 	
 	public function getChannelId(){
 		return $this->channelid;
@@ -45,6 +45,17 @@ abstract class content{
 		return $this->newsid;
 	}
 	
+	public function getChannelGenre(){
+		return $this->genre;
+	}
+	
+	public function getChannelDescription(){
+		return $this->channeldescription;
+	}
+	
+	public function getChannelName(){
+		return $this->channelname;
+	}
 	/**
 	* function for getting the distict news id which belong to a channeladmin
 	* @param $channelid $offset $limit 
@@ -52,6 +63,25 @@ abstract class content{
 	*/
 	public static function newsidSearch($channelid,$offset,$limit){
 		$sql="select newsid from nns_news where channelid = '$channelid' limit $limit offset $offset";
+		return resource2array(dbquery($sql));
+	}
+	
+	/**
+	* function for getting the distinct channelid
+	* @param $offset $limit
+	* @return array array of channelid
+	*/
+	public static function channelidSearch($offset,$limit){
+		$sql = "select channelid from nns_channel limit $limit offset $offset";
+		return resource2array(dbquery($sql));
+	}
+	/**
+	* function for getting the list of channelid for the different user 
+	* param $uid $offset $limit
+	* @return array array of channelid 
+	*/
+	public static function subscriptionChannelidSearch($uid,$offset,$limit){
+		$sql = "select channelid from nns_subscribe where uid = $uid limit $limit offset $offset";
 		return resource2array(dbquery($sql));
 	}
 

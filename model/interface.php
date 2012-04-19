@@ -19,7 +19,8 @@ function getAllNews($channelid,$page){
 	$newsid = content::newsidSearch($channelid,($page*10)-10,10);
 	$json = array();
 	for($i=0;$i<count($newsid);$i++){
-		$obj = new news($newsid[$i]);
+		$obj = new news();
+		$obj->viewNews($newsid[$i]);
 		array_push($json,array('newsid'=>$obj->getNewsId(),
 										'channelid'=>$obj->getChannelId(),
 										'uid'=>$obj->getUserId(),
@@ -30,5 +31,33 @@ function getAllNews($channelid,$page){
 	echo json_encode($json);
 }
 
+function getAllChannels($page){
+	$channelid = content::channelidSearch(($page*10)-10,10);
+	$json = array();
+	for($i=0;$i<count($channelid);$i++){
+		$obj = new news();
+		$obj->viewChannel($channelid[$i]);
+		array_push($json,array('channelid'=>$obj->getChannelId(),
+										'description'=>$obj->getChannelDescription(),
+										'genre'=>$obj->getChannelGenre(),
+										'channelname'=>$obj->getChannelName()));
+	}
+	echo json_encode($json);
+}
+
+function getAllSubscribedChannels($uid,$page){
+	$channelid = content::subscriptionChannelidSearch($uid,($page*10)-10,10);
+	$json = array();
+	for($i=0;$i<count($channelid);$i++){
+		$obj = new news();
+
+		$obj->viewChannel($channelid[$i]);
+		array_push($json,array('channelid'=>$obj->getChannelId(),
+										'description'=>$obj->getChannelDescription(),
+										'genre'=>$obj->getChannelGenre(),
+										'channelname'=>$obj->getChannelName()));
+	}
+	echo json_encode($json);
+}
 
 ?>

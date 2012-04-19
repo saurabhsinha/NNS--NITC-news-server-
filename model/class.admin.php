@@ -33,12 +33,11 @@ class admin{
 	* @param string $channel name is the name of the channel.
 	* @param string $genre is the genre of the channel
 	*/
-	public function createChannel($uid,$channelname,$channeldescription,$genre){
-		$this->uid=$uid;
+	public function createChannel($channelname,$channeldescription,$genre){
 		$this->channelname=pg_escape_string($channelname);
 		$this->channeldescription=pg_escape_string($channeldescription);
 		$this->genre=pg_escape_string($genre);
-		$sql = "insert into nns_channel (uid,channelname,channeldescription,genre) values ('".$this->uid."','".$this->channelname."','".$this->channeldescription."','".$this->genre."') returning channelid";
+		$sql = "insert into nns_channel (channelname,channeldescription,genre) values ('".$this->channelname."','".$this->channeldescription."','".$this->genre."') returning channelid";
 		$user=pg_fetch_assoc(dbquery($sql));
 		$this->channelid = $user['channelid'];
 	}
@@ -49,7 +48,7 @@ class admin{
 	public function getChannelName(){
 		Return $this->channelname;
 	}
-	public function getChanneDescription(){
+	public function getChannelDescription(){
 		Return $this->channeldescription;
 	}
 	public function getChannelGenre(){
