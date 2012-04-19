@@ -323,9 +323,9 @@ class user
 		}
 	}
 }
-$temp = new user('3');
+#$temp = new user('3');
 #echo $temp['email'];
-$temp->getEmail();
+#$temp->getEmail();
 
 
 ?>
