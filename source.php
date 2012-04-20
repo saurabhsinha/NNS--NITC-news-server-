@@ -69,7 +69,7 @@
 				</form>";
 	}
 	else {
-		$topNotLoggedIn="<p>hello</p>";
-		//$register="'".$_SESSION['uid']."'";
+		$topNotLoggedIn="<p>".$_SESSION['name']."</p>";
+
 	}
 ?>
