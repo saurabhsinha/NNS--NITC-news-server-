@@ -42,20 +42,20 @@ class activity
 	* @param string $upass User Password
 	* @return 
 	*/
-	public static function login($email,$upass)
+	public static function login($uemail,$upass)
 	{
-		$uname=pg_escape_string($email);
+		$uemail=pg_escape_string($uemail);
 		$upass=sha1($upass);
-		$sql="Select uid, name, type from nns_user where email='$email' and password='$upass'";
+		$sql="Select uid, name, type from nns_user where email='$uemail' and password='$upass'";
 		$res=dbquery($sql);
 		if($res)
 		{
 			$user=resource2array($res);
 			session_start();
 			$_SESSION['uid']=$user[0];
-			$_SESSION['type']=$user[1];
-			$_SESSION['name']=$user[2];
-			$_SESSION['userpic']=user::getUserPicture($user[0]);
+			$_SESSION['name']=$user[1];
+			$_SESSION['type']=$user[2];
+			//$_SESSION['userpic']=user::getUserPicture($user[0]);
 			return 1;
 		}
 		return 0;
@@ -72,6 +72,7 @@ class activity
 	}
 }
 #$obj=new activity();
+#$obj->login('addy@gmail.com','indian');
 #$obj->comment(2,4,'test comment');
 
 ?>
